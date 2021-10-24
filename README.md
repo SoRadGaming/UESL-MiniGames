@@ -6,7 +6,6 @@ TODO:
 
 Bugs:
 - Teammates don't get points for destroying bed in bedwars
-- end buildbattle event not working
 - tntrun events not working
 - hungergames events not working
 

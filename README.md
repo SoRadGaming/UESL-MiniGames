@@ -1,4 +1,4 @@
-# UESLMiniGames
+# UESL-MiniGames
 This Plugin is to Manage Player for Minigames, and Adding a Simple point system for minecraft events.
 
 TODO:

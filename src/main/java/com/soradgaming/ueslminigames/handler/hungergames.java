@@ -11,10 +11,7 @@ import tk.shanebee.hg.events.GameEndEvent;
 import tk.shanebee.hg.events.GameStartEvent;
 import tk.shanebee.hg.events.PlayerDeathGameEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 
 public class hungergames implements Listener {
@@ -53,27 +50,22 @@ public class hungergames implements Listener {
     @EventHandler
     public void GameStartEvent(@NotNull GameStartEvent event) {
         playerListHungerGames = (ArrayList<UUID>) event.getGame().getGamePlayerData().getPlayers();
-        Bukkit.getConsoleSender().sendMessage("GameStartEvent Worked");
     }
 
     @EventHandler
     public void PlayerDeathGameEvent(PlayerDeathGameEvent event) {
-        Bukkit.getConsoleSender().sendMessage("PlayerDeathGameEvent Worked");
         if (Started) {
         Player player = event.getEntity();
 
         //Get Killer From Death Message
         String deathMessage = event.getDeathMessage();
         String[] arr = Objects.requireNonNull(deathMessage).split(" ", 9);
-        Bukkit.getConsoleSender().sendMessage("Decoded Death Message " + Arrays.toString(arr));
         if (arr.length == 9 && !arr[8].equals("Stray!") && !arr[8].equals("Skeleton")) {
             String fourthWordIsKiller = arr[4];
-            String KillerFormatFix = ChatColor.translateAlternateColorCodes('&',fourthWordIsKiller);
+            String KillerFormatFix = fourthWordIsKiller.substring(2);
             Player killer = Bukkit.getServer().getPlayer(KillerFormatFix);
-            assert killer != null;
-            Bukkit.getConsoleSender().sendMessage("4th Word is " + fourthWordIsKiller);
-            Bukkit.getConsoleSender().sendMessage("The Killer was " + killer);
             //HungerGames Data
+            assert killer != null;
             int oldKills = plugin.data.getInt(killer.getUniqueId() + ".hungergamesKills");
             plugin.data.set(killer.getUniqueId() + ".hungergamesKills", 1 + oldKills);
         }
@@ -95,8 +87,9 @@ public class hungergames implements Listener {
 
     @EventHandler
     public void GameEndEvent(GameEndEvent event) {
-        Bukkit.getConsoleSender().sendMessage("GameEndEvent Worked");
         if (Started) {
+            Collection<Player> player = event.getWinners();
+            Bukkit.getConsoleSender().sendMessage("Winner is " + player );
             Player p = (Player) event.getWinners();
             int oldPoints = plugin.data.getInt(p.getUniqueId() + ".points");
             plugin.data.set(p.getUniqueId() + ".points", plugin.getConfig().getInt("hungergames_first") + oldPoints);

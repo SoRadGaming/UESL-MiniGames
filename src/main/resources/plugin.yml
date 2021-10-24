@@ -1,0 +1,11 @@
+name: UESL-MiniGames
+version: '${version}'
+main: com.soradgaming.ueslminigames.UESLMiniGames
+api-version: 1.17
+authors: [ SoRadGaming ]
+description: Plugin for the UESL Minecraft Server Minigames
+depend: [PlaceholderAPI, PaintballBattle, HungerGames, TNTRun_reloaded, Parkour, BedWars, Spleef, BuildBattle]
+softdepend: []
+commands:
+  umg:
+    description: The main command for the plugin.

@@ -38,9 +38,12 @@ public class hungergames implements Listener {
             for (UUID uuid : playerList) {
                 Player p = Bukkit.getPlayer(uuid);
                 int killCount = plugin.data.getInt(uuid + ".hungergamesKills");
-                int killPoints = killCount * plugin.getConfig().getInt("hungergames_points_per_kills");
-                int oldPoints = plugin.data.getInt(uuid + ".points");
-                plugin.data.set(uuid + ".points", killPoints + oldPoints);
+                if (killCount > 0) {
+                    int killPoints = killCount * plugin.getConfig().getInt("hungergames_points_per_kills");
+                    int oldPoints = plugin.data.getInt(uuid + ".points");
+                    plugin.data.set(uuid + ".points", killPoints + oldPoints);
+                    plugin.saveFile();
+                }
                 Objects.requireNonNull(p).performCommand(Objects.requireNonNull(plugin.getConfig().getString("hungergames_end_command")));
             }
             playerListHungerGames = new ArrayList<>();
@@ -89,8 +92,7 @@ public class hungergames implements Listener {
     public void GameEndEvent(GameEndEvent event) {
         if (Started) {
             Collection<Player> player = event.getWinners();
-            Bukkit.getConsoleSender().sendMessage("Winner is " + player );
-            Player p = (Player) event.getWinners();
+            Player p = player.iterator().next();
             int oldPoints = plugin.data.getInt(p.getUniqueId() + ".points");
             plugin.data.set(p.getUniqueId() + ".points", plugin.getConfig().getInt("hungergames_first") + oldPoints);
             plugin.saveFile();

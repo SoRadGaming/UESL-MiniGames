@@ -52,6 +52,8 @@ public class bracketManager {
             plugin.data.set(uuid + ".finalPaintballWins", 0);
             plugin.data.set(uuid + ".finalPaintballLoses", 0);
             plugin.data.set(uuid + ".finalPaintballTies", 0);
+            //HungerGames Kills
+            plugin.data.set(uuid + ".hungergamesKills", 0);
             //Save Data
             plugin.saveFile();
         }

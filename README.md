@@ -5,8 +5,7 @@ TODO:
 - Game Master (Manage Players and Game)
 
 Bugs:
-- hg 1,2,3 place done work
-- hg kills counted but not added to point
+- None Known
 
 Commands:
 - /umg

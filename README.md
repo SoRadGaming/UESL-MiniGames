@@ -2,7 +2,7 @@
 This Plugin is to Manage Player for Minigames, and Adding a Simple point system for minecraft events.
 
 TODO:
-- Game Master (Manage Players and Game)
+- prevent player from playing same MiniGame twice
 
 Bugs:
 - None Known

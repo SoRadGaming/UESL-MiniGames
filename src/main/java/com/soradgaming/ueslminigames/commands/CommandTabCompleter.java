@@ -1,6 +1,7 @@
 package com.soradgaming.ueslminigames.commands;
 
 import com.soradgaming.ueslminigames.UESLMiniGames;
+import com.soradgaming.ueslminigames.managment.gameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -8,10 +9,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class CommandTabCompleter implements TabCompleter {
 
@@ -22,11 +20,11 @@ public class CommandTabCompleter implements TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, Command cmd, @NotNull String s, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, String[] args) {
         if(cmd.getName().equalsIgnoreCase("umg")){
             ArrayList<String> completions = new ArrayList<>();
             if (args.length == 1) {
-                completions = new ArrayList<>(Arrays.asList("add", "help", "reload", "remove", "list", "set", "test", "Initialise", "start", "end","addall"));
+                completions = new ArrayList<>(Arrays.asList("add", "help", "reload", "remove", "list", "set", "Initialise", "start", "end","addall"));
                 completions = getApplicableTabCompletes(args[0], completions);
             } else if (args.length == 2) {
                 switch (args[0]) {
@@ -42,7 +40,7 @@ public class CommandTabCompleter implements TabCompleter {
                         completions = new ArrayList<>(Arrays.asList("lobby", "first", "second", "third", "spectator"));
                         completions = getApplicableTabCompletes(args[1], completions);
                         break;
-                    case "test":
+                    case "start":
                         completions = new ArrayList<>(Arrays.asList("bedwars", "buildbattle", "hungergames", "paintball", "parkour", "spleef", "tntrun"));
                         completions = getApplicableTabCompletes(args[1], completions);
                         break;
@@ -50,9 +48,22 @@ public class CommandTabCompleter implements TabCompleter {
                         completions = new ArrayList<>(Arrays.asList("bedwars", "buildbattle", "hungergames", "paintball", "parkour", "spleef", "tntrun", "all"));
                         completions = getApplicableTabCompletes(args[1], completions);
                         break;
+                    case "list":
+                        Set<String> oldKeys = gameManager.playerList.keySet();
+                        List<String > keys = new ArrayList<>(oldKeys);
+                        completions = new ArrayList<>(keys);
+                        completions = getApplicableTabCompletes(args[1], completions);
+                        break;
                     default:
                         return null;
                 }
+            } else if (args.length == 3) {
+                if (Objects.equals(args[0], "add") || Objects.equals(args[0], "start") || Objects.equals(args[0], "remove")) {
+                    Set<String> oldKeys = gameManager.playerList.keySet();
+                    List<String > keys = new ArrayList<>(oldKeys);
+                    completions = new ArrayList<>(keys);
+                }
+                completions = getApplicableTabCompletes(args[2], completions);
             }
             Collections.sort(completions);
             return completions;

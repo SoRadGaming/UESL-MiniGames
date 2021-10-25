@@ -11,9 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 import static com.soradgaming.ueslminigames.handler.bedwars.endBedwars;
 import static com.soradgaming.ueslminigames.handler.bedwars.startBedwars;
@@ -46,7 +44,7 @@ public class UESLCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.BLUE + "=============={" + ChatColor.GREEN + "UESL-MiniGames" + ChatColor.BLUE + "}==============");
             sender.sendMessage(ChatColor.BLUE + "Plugin developed by:" + ChatColor.GREEN + " SoRadGaming");
             sender.sendMessage(ChatColor.BLUE + "Version: " + ChatColor.GREEN + String.format("%s", plugin.getDescription().getVersion()));
-            sender.sendMessage(ChatColor.BLUE + "Plugin:" + ChatColor.GREEN + " https://github.com/SoRadGaming/UESL-MCPlugin");
+            sender.sendMessage(ChatColor.BLUE + "Plugin:" + ChatColor.GREEN + " https://github.com/SoRadGaming/UESL-MiniGames");
             sender.sendMessage(ChatColor.BLUE + "Do " + ChatColor.GREEN + "/umg help " + ChatColor.BLUE + "for the list of commands!");
             sender.sendMessage(ChatColor.BLUE + "=============={" + ChatColor.GREEN + "UESL-MiniGames" + ChatColor.BLUE + "}==============");
 
@@ -58,10 +56,16 @@ public class UESLCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.BLUE + "-----------------=[" + ChatColor.GREEN + "UESL-MiniGames" + ChatColor.BLUE + "]=-----------------");
             sender.sendMessage(ChatColor.GREEN + "/umg help" + ChatColor.BLUE + "  The help command.");
             sender.sendMessage(ChatColor.GREEN + "/umg reload" + ChatColor.BLUE + "  To reload the plugin");
-            sender.sendMessage(ChatColor.GREEN + "/umg add player" + ChatColor.BLUE + "  To View a players data");
-            sender.sendMessage(ChatColor.GREEN + "/umg remove player dataset value" + ChatColor.BLUE + "  Modify the data in player.yml");
-            sender.sendMessage(ChatColor.BLUE + "Plugin made by: " + ChatColor.GREEN + "SoRadGaming");
-            //add all new commands to help
+            sender.sendMessage(ChatColor.GREEN + "/umg add player group" + ChatColor.BLUE + " Add player to Data Base");
+            sender.sendMessage(ChatColor.GREEN + "/umg remove player group" + ChatColor.BLUE + " Remove player to Data Base");
+            sender.sendMessage(ChatColor.GREEN + "/umg addall" + ChatColor.BLUE + " Add All Online players to Universal Group All");
+            sender.sendMessage(ChatColor.GREEN + "/umg list" + ChatColor.BLUE + " See all players in Data Base");
+            sender.sendMessage(ChatColor.GREEN + "/umg Initialise" + ChatColor.BLUE + " Start Data Base Creation " + ChatColor.RED + "REQUIRED");
+            sender.sendMessage(ChatColor.GREEN + "/umg start" + ChatColor.BLUE + " Start the Plugin " + ChatColor.RED + "REQUIRED");
+            sender.sendMessage(ChatColor.GREEN + "/umg start minigames group" + ChatColor.BLUE + " start a MiniGame with certain group of players");
+            sender.sendMessage(ChatColor.GREEN + "/umg end minigames" + ChatColor.BLUE + " End test MiniGame");
+            sender.sendMessage(ChatColor.GREEN + "/umg set location" + ChatColor.BLUE + " Set Location Values " + ChatColor.RED + "REQUIRED");
+            sender.sendMessage(ChatColor.GREEN + "Plugin made by: " + ChatColor.BLUE + "SoRadGaming");
             sender.sendMessage(ChatColor.BLUE + "---------------------------------------------------");
 
         } else if (args.length == 1 && args[0].equalsIgnoreCase("addall")) {
@@ -74,7 +78,6 @@ public class UESLCommand implements CommandExecutor {
             }
         }  else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
             if (sender.isOp()) {
-                plugin.saveConfig();
                 plugin.reloadConfig();
                 plugin.getLogger().info("Reloaded");
                 sender.sendMessage(ChatColor.GREEN + "Reloaded");
@@ -93,6 +96,7 @@ public class UESLCommand implements CommandExecutor {
         }   else if (args.length == 1 && args[0].equalsIgnoreCase("start")) {
             if (sender.isOp()) {
                 plugin.startedCommand = true;
+                //Start();
                 sender.sendMessage(ChatColor.GREEN + "Started");
             } else {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
@@ -100,7 +104,7 @@ public class UESLCommand implements CommandExecutor {
             }
         } else if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
             if (sender.isOp()) {
-                List<UUID> playerList = gameManager.getPlayerList();
+                List<UUID> playerList = gameManager.getPlayerList("All");
                 for (UUID uuid : playerList) {
                     sender.sendMessage(ChatColor.BLUE + Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName());
                 }
@@ -108,14 +112,24 @@ public class UESLCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
                 return true;
             }
-        }else if (args.length == 2 && args[0].equalsIgnoreCase("add")) {
+        }  else if (args.length == 2 && args[0].equalsIgnoreCase("list")) {
+            if (sender.isOp()) {
+                List<UUID> playerList = gameManager.getPlayerList(args[1]);
+                for (UUID uuid : playerList) {
+                    sender.sendMessage(ChatColor.BLUE + Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName());
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
+                return true;
+            }
+        } else if (args.length == 3 && args[0].equalsIgnoreCase("add")) {
             if (sender.isOp()) {
                 Player player = Bukkit.getServer().getPlayer(args[1]);
                 if (player == null) {
                     sender.sendMessage(ChatColor.RED + "Player can not be null!");
                     return true;
                 }
-                if (gameManager.addPlayer(player)) {
+                if (gameManager.addPlayer(args[2], player)) {
                     sender.sendMessage(ChatColor.BLUE + player.getName() + ChatColor.GREEN + " Added");
                     return true;
                 }
@@ -124,7 +138,7 @@ public class UESLCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
                 return true;
             }
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+        } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             if (sender.isOp()) {
                 Player player = Bukkit.getServer().getPlayer(args[1]);
 
@@ -132,7 +146,7 @@ public class UESLCommand implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "Player can not be null!");
                         return true;
                     }
-                if (gameManager.removePlayer(player)) {
+                if (gameManager.removePlayer(args[2], player)) {
                     sender.sendMessage(ChatColor.BLUE + player.getName() + ChatColor.GREEN + " Removed");
                     return true;
                 }
@@ -145,51 +159,46 @@ public class UESLCommand implements CommandExecutor {
             if (sender.isOp()) {
                 if (Objects.equals(args[1], "lobby")) {
                     plugin.getConfig().set("Lobby",loc);
-                    plugin.saveConfig();
                     sender.sendMessage(ChatColor.GREEN + "Lobby Set to " + loc);
                 } else if (Objects.equals(args[1], "first")) {
                     plugin.getConfig().set("first_place",loc);
-                    plugin.saveConfig();
                     sender.sendMessage(ChatColor.GREEN + "First Place Location Set to " + loc);
                 }  else if (Objects.equals(args[1], "second")) {
                     plugin.getConfig().set("second_place",loc);
-                    plugin.saveConfig();
                     sender.sendMessage(ChatColor.GREEN + "Second Place Location Set to " + loc);
                 }  else if (Objects.equals(args[1], "third")) {
                     plugin.getConfig().set("third_place",loc);
-                    plugin.saveConfig();
                     sender.sendMessage(ChatColor.GREEN + "Third Place Location Set to " + loc);
                 }  else if (Objects.equals(args[1], "spectator")) {
                     plugin.getConfig().set("spectators",loc);
-                    plugin.saveConfig();
                     sender.sendMessage(ChatColor.GREEN + "Spectator Location Set to " + loc);
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
                 return true;
             }
-        }   else if (args.length == 2 && args[0].equalsIgnoreCase("test")) {
+        }   else if (args.length == 3 && args[0].equalsIgnoreCase("start")) {
             if (sender.isOp()) {
                 if (Objects.equals(args[1], "bedwars")) {
-                    startBedwars(gameManager.getPlayerList());
+                    startBedwars(gameManager.getPlayerList(args[2]));
                     sender.sendMessage(ChatColor.GREEN + "Started BedWars");
                 } else if (Objects.equals(args[1], "buildbattle")) {
-                    startBuildBattle(gameManager.getPlayerList());
+                    startBuildBattle(gameManager.getPlayerList(args[2]));
                     sender.sendMessage(ChatColor.GREEN + "Started BuildBattle");
                 }  else if (Objects.equals(args[1], "hungergames")) {
-                    startHungerGames(gameManager.getPlayerList());
+                    startHungerGames(gameManager.getPlayerList(args[2]));
                     sender.sendMessage(ChatColor.GREEN + "Started HungerGames");
                 }  else if (Objects.equals(args[1], "paintball")) {
-                    startPaintball(gameManager.getPlayerList());
+                    startPaintball(gameManager.getPlayerList(args[2]));
                     sender.sendMessage(ChatColor.GREEN + "Started PaintBall");
                 }  else if (Objects.equals(args[1], "parkour")) {
-                    startParkour(gameManager.getPlayerList());
+                    startParkour(gameManager.getPlayerList(args[2]));
                     sender.sendMessage(ChatColor.GREEN + "Started Parkour");
                 }  else if (Objects.equals(args[1], "spleef")) {
-                    startSpleef(gameManager.getPlayerList());
+                    startSpleef(gameManager.getPlayerList(args[2]));
                     sender.sendMessage(ChatColor.GREEN + "Started Spleef");
                 }  else if (Objects.equals(args[1], "tntrun")) {
-                    startTNTRun(gameManager.getPlayerList());
+                    startTNTRun(gameManager.getPlayerList(args[2]));
                     sender.sendMessage(ChatColor.GREEN + "Started TNTRun");
                 }
             } else {

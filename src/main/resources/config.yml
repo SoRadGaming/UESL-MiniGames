@@ -2,6 +2,7 @@
 #               UESL MiniGames               #
 ##############################################
 #Config for Plugin
+#Edit Offline
 
 ##############################################
 #                 Paintball                  #
@@ -10,6 +11,7 @@
 paintball_arena: arena1
 paintball_start_command: paintball join arena1
 paintball_end_command: paintball leave
+paintball_max_player_count: 10
 #Paintball Message (support for & colours):
 paintball_message: Joining Paintball
 paintball_rule: Points are based of Kills and if you Win
@@ -25,6 +27,7 @@ paintball_points_per_kills: 1
 spleef_arena: Death_Spleef
 spleef_start_command: spleef join Death_Spleef
 spleef_end_command: spleef leave
+spleef_max_player_count: 6
 #Spleef Message (support for & colours):
 spleef_message: Joining Parkour
 spleef_rule: Points are based of CheckPopints and if you Finish
@@ -35,8 +38,9 @@ spleef_first: 5
 ##############################################
 #TNTRun Arena Map
 tntrun_arena: arena1
-tntrun_start_command: tntrunX join arena1
-tntrun_end_command: tntrunX leave
+tntrun_start_command: tntrun join arena1
+tntrun_end_command: tntrun leave
+tntrun_max_player_count: 24
 #TNTRun Message (support for & colours):
 tntrun_message: Joining TNTRun
 tntrun_rule: Points are based of if you Win
@@ -48,10 +52,11 @@ tntrun_third: 5
 #                  Parkour                   #
 ##############################################
 #Parkour Arena Map
-parkour_arena: parkourparadise
-parkour_start_command: pa join parkourparadise
+parkour_arena: parkoursnake
+parkour_start_command: pa join parkoursnake
 parkour_end_command: pa leave
 parkour_timer: 600
+parkour_max_player_count: 24
 #Parkour Message (support for & colours):
 parkour_message: Joining Parkour
 parkour_rule: Points are based of CheckPopints and if you Finish
@@ -68,6 +73,7 @@ parkour_points_per_checkpoint: 1
 buildbattle_arena: Solo
 buildbattle_start_command: buildbattle join Solo
 buildbattle_end_command: buildbattle leave
+buildbattle_max_player_count: 6
 #buildbattle Message (support for & colours):
 buildbattle_message: Joining Build Battle
 buildbattle_rule: Points are based of Votes and if you Win
@@ -81,6 +87,7 @@ buildbattle_points_per_point: 1
 bedwars_arena: Castle-Defenders
 bedwars_start_command: bedwars join Castle-Defenders
 bedwars_end_command: bedwars leave
+bedwars_max_player_count: 12
 #BedWars Message (support for & colours):
 bedwars_message: Joining BedWars
 bedwars_rule: Points are based of Kills and if you Win
@@ -95,6 +102,7 @@ bedwars_points_per_bed: 5
 hungergames_arena: breeze2
 hungergames_start_command: hg join breeze2
 hungergames_end_command: hg leave
+hungergames_max_player_count: 24
 #HungerGames Message (support for & colours):
 hungergames_message: Joining HungerGames
 hungergames_rule: Points are based of Kills and if you Win
@@ -107,9 +115,44 @@ hungergames_points_per_kills: 1
 #                   Global                   #
 ##############################################
 #Lobby Location
-Lobby: location
+Lobby:
+  ==: org.bukkit.Location
+  world: World
+  x: -19.024953654972823
+  y: 7.0
+  z: 0.41853033280153595
+  pitch: 6.2918787
+  yaw: 91.84687
 #Winner Location
-first_place: location
-second_place: location
-third_place: location
-spectators: location
+first_place:
+  ==: org.bukkit.Location
+  world: World
+  x: -0.8879658146635097
+  y: 7.0
+  z: -11.395532714905126
+  pitch: 7.8449035
+  yaw: -174.51395
+second_place:
+  ==: org.bukkit.Location
+  world: World
+  x: 1.1254882886722222
+  y: 7.0
+  z: -13.845002368671585
+  pitch: 7.8449035
+  yaw: -174.51395
+third_place:
+  ==: org.bukkit.Location
+  world: World
+  x: 2.73636840402138
+  y: 7.0
+  z: -15.369928092052966
+  pitch: 7.8449035
+  yaw: -174.51395
+spectators:
+  ==: org.bukkit.Location
+  world: World
+  x: 0.6421321887032221
+  y: 7.0
+  z: -17.196836045349983
+  pitch: 7.8449035
+  yaw: -174.51395

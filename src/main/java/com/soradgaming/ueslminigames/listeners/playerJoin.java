@@ -1,6 +1,7 @@
 package com.soradgaming.ueslminigames.listeners;
 
 import com.soradgaming.ueslminigames.UESLMiniGames;
+import com.soradgaming.ueslminigames.managment.gameManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,7 @@ public class playerJoin implements Listener {
 
     @EventHandler
     public void PlayerJoinEvent(PlayerJoinEvent event) {
+        gameManager.addAllOnlinePlayers();
         if (plugin.startedCommand) {
             Player player = event.getPlayer();
             player.teleport(Objects.requireNonNull(plugin.getConfig().getLocation("Lobby")));

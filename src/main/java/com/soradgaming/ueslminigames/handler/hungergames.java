@@ -47,6 +47,7 @@ public class hungergames implements Listener {
                 Objects.requireNonNull(p).performCommand(Objects.requireNonNull(plugin.getConfig().getString("hungergames_end_command")));
             }
             playerListHungerGames = new ArrayList<>();
+
         }
     }
 

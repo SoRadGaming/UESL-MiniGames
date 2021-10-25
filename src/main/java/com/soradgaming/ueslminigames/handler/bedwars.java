@@ -19,7 +19,6 @@ import java.util.UUID;
 
 public class bedwars implements Listener {
     private static final UESLMiniGames plugin = UESLMiniGames.plugin;
-    //private static final BedwarsAPI api = BedwarsAPI.getInstance();
     private static ArrayList<UUID> playerList;
     private static int tiedPlayers;
     private static boolean Started = false;
@@ -50,10 +49,10 @@ public class bedwars implements Listener {
                 plugin.data.set(item + ".finalBedwarsLoses", getNewLoses(p));
                 plugin.data.set(item + ".finalBedwarsBed", getNewBed(p));
                 if (plugin.data.getInt(item + ".finalBedwarsBed") > 0) {
-                    for (int i = 0; i < teams.size(); i++) {
-                        List<Player> playerInTeam = teams.get(i).getConnectedPlayers();
+                    for (RunningTeam team : teams) {
+                        List<Player> playerInTeam = team.getConnectedPlayers();
                         for (int x = 0; x < playerInTeam.size(); x++) {
-                            if (playerInTeam.get(i).getPlayer() == Bukkit.getPlayer(item)) {
+                            if (playerInTeam.get(x).getPlayer() == Bukkit.getPlayer(item)) {
                                 for (Player player : playerInTeam) {
                                     UUID playerUUID = player.getUniqueId();
                                     plugin.data.set(playerUUID + ".finalBedwarsBed", plugin.data.getInt(item + ".finalBedwarsBed"));
@@ -86,10 +85,10 @@ public class bedwars implements Listener {
                 Objects.requireNonNull(p).performCommand(Objects.requireNonNull(plugin.getConfig().getString("bedwars_end_command")));
             }
             for (UUID uuid : playerList) {
-                int tiedPoints = (plugin.getConfig().getInt("bedwars_first") / tiedPlayers);
                 int oldPoints = plugin.data.getInt(uuid + ".points");
                 int bedPoints = (plugin.data.getInt(uuid + ".finalBedwarsBed") * plugin.getConfig().getInt("bedwars_points_per_bed"));
                 if (plugin.data.getInt(uuid + ".finalBedwarsTies") > 0) {
+                    int tiedPoints = (plugin.getConfig().getInt("bedwars_first") / tiedPlayers);
                     plugin.data.set(uuid + ".points", oldPoints + tiedPoints);
                     plugin.saveFile();
                 }

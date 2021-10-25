@@ -5,9 +5,9 @@ TODO:
 - Game Master (Manage Players and Game)
 
 Bugs:
-- Teammates don't get points for destroying bed in bedwars
 - hg 1,2,3 place done work
 - hg kills counted but not added to point
+
 Commands:
 - /umg
 - /umg help

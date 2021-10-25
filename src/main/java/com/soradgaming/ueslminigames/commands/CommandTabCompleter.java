@@ -24,7 +24,7 @@ public class CommandTabCompleter implements TabCompleter {
         if(cmd.getName().equalsIgnoreCase("umg")){
             ArrayList<String> completions = new ArrayList<>();
             if (args.length == 1) {
-                completions = new ArrayList<>(Arrays.asList("add", "help", "reload", "remove", "list", "set", "Initialise", "start", "end","addall"));
+                completions = new ArrayList<>(Arrays.asList("add", "help", "reload", "remove", "list", "set", "Initialise", "start", "end","addall", "finish"));
                 completions = getApplicableTabCompletes(args[0], completions);
             } else if (args.length == 2) {
                 switch (args[0]) {

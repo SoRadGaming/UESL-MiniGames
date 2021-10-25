@@ -6,6 +6,7 @@ import com.soradgaming.ueslminigames.handler.*;
 import com.soradgaming.ueslminigames.listeners.playerJoin;
 import com.soradgaming.ueslminigames.listeners.playerLeave;
 import com.soradgaming.ueslminigames.managment.bracketManager;
+import com.soradgaming.ueslminigames.placeholders.placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -64,6 +65,8 @@ public final class UESLMiniGames extends JavaPlugin implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents(new playerLeave(), this);
         //Custom Events
         Bukkit.getServer().getPluginManager().registerEvents(new bracketManager(), this);
+        //PAPI
+        new placeholder().register();
     }
 
     //Save the data file.

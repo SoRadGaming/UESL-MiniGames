@@ -76,6 +76,22 @@ public class UESLCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
                 return true;
             }
+        }  else if (args.length == 1 && args[0].equalsIgnoreCase("finish")) {
+            if (sender.isOp()) {
+                plugin.startedCommand = false;
+                endTNTRun();
+                endSpleef();
+                endPaintball();
+                endBedwars();
+                endParkour();
+                endHungerGames();
+                endBuildBattle();
+                gameManager.finish();
+                sender.sendMessage(ChatColor.GREEN + "Starting Finish Event");
+            } else {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
+                return true;
+            }
         }  else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
             if (sender.isOp()) {
                 plugin.reloadConfig();

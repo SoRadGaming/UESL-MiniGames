@@ -86,8 +86,11 @@ public class UESLCommand implements CommandExecutor {
                 endParkour();
                 endHungerGames();
                 endBuildBattle();
-                gameManager.finish();
-                sender.sendMessage(ChatColor.GREEN + "Starting Finish Event");
+                if (gameManager.finish()) {
+                    sender.sendMessage(ChatColor.GREEN + "Starting Finish Event");
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Not Enough Players in List");
+                }
             } else {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
                 return true;

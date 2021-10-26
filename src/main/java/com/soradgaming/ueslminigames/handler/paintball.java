@@ -71,7 +71,6 @@ public class paintball {
                     if (plugin.data.getInt(uuid + ".finalPaintballWins") > 0) {
                         plugin.data.set(uuid + ".points", plugin.getConfig().getInt("paintball_win") + killPoints + oldPoints);
                     } else {
-                        Objects.requireNonNull(p).sendMessage(String.valueOf(killPoints));
                         plugin.data.set(uuid + ".points", killPoints + oldPoints);
                     }
                     Objects.requireNonNull(p).performCommand(Objects.requireNonNull(plugin.getConfig().getString("paintball_end_command")));

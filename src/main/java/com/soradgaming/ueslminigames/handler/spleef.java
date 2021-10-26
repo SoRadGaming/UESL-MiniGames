@@ -54,10 +54,10 @@ public class spleef {
 
     public static void gameStatusLoop() {
         Player player = Bukkit.getPlayer(playerList.get(0));
-        if (!gamesStats && getGameStatus(player).equals("§cIn Game")) {
+        if (!gamesStats && getGameStatus(player).trim().equals("InGame")) {
             gamesStats = true;
         }
-        if (gamesStats && getGameStatus(player).equals("§aWaiting")) {
+        if (gamesStats && getGameStatus(player).trim().equals("Waiting")) {
             endSpleef();
         }
     }

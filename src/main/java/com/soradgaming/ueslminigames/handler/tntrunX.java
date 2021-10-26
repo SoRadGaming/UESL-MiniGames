@@ -1,6 +1,7 @@
 package com.soradgaming.ueslminigames.handler;
 
 import com.soradgaming.ueslminigames.UESLMiniGames;
+import com.soradgaming.ueslminigames.managment.gameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -41,6 +42,7 @@ public class tntrunX implements Listener {
                 Objects.requireNonNull(player).performCommand(Objects.requireNonNull(plugin.getConfig().getString("tntrun_end_command")));
                 Objects.requireNonNull(player).teleport(Objects.requireNonNull(plugin.getConfig().getLocation("Lobby")));
             }
+            gameManager.addAllOnlinePlayers();
         }
     }
 

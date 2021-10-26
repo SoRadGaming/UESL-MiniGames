@@ -14,9 +14,9 @@ public class playerJoin implements Listener {
 
     @EventHandler
     public void PlayerJoinEvent(PlayerJoinEvent event) {
-        gameManager.addAllOnlinePlayers();
+        Player player = event.getPlayer();
+        gameManager.addPlayer("All", player);
         if (plugin.startedCommand) {
-            Player player = event.getPlayer();
             player.teleport(Objects.requireNonNull(plugin.getConfig().getLocation("Lobby")));
         }
     }

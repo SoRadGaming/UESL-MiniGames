@@ -6,6 +6,9 @@ import io.github.a5h73y.parkour.event.PlayerFinishCourseEvent;
 import io.github.a5h73y.parkour.event.PlayerJoinCourseEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,23 +25,44 @@ public class parkour implements Listener {
     private static final ArrayList<UUID> playerListParkour = new ArrayList<>();
     private static boolean Started = false;
     private static final BukkitScheduler scheduler = Bukkit.getScheduler();
+    private static final BukkitScheduler scheduler1 = Bukkit.getScheduler();
+    private static BossBar bossBar;
+    private static double timerInterval;
 
     public static void startParkour(ArrayList<UUID> input) {
         playerList = input;
         Started = true;
+        int minutes = (plugin.getConfig().getInt("parkour_timer")/60);
+        int seconds = (plugin.getConfig().getInt("parkour_timer") - (minutes * 60));
+        bossBar = Bukkit.createBossBar(ChatColor.BOLD + "Parkour Timer " + ChatColor.GOLD + minutes + ":" + ChatColor.GOLD + seconds , BarColor.BLUE, BarStyle.SOLID);
+        bossBar.setVisible(true);
+        bossBar.setProgress(0);
         for (UUID uuid : playerList) {
             Player p = Bukkit.getPlayer(uuid);
             Objects.requireNonNull(p).sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(plugin.getConfig().getString("parkour_message"))));
             Objects.requireNonNull(p).performCommand(Objects.requireNonNull(plugin.getConfig().getString("parkour_start_command")));
             Objects.requireNonNull(p).sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(plugin.getConfig().getString("parkour_rule"))));
+            bossBar.addPlayer(p);
         }
+        timerInterval = (1 / (double) plugin.getConfig().getInt("parkour_timer"));
         // With BukkitScheduler
-        scheduler.runTaskLater(plugin, parkour::endParkour, 20L * plugin.getConfig().getInt("parkour_timer"));
+        scheduler.runTaskLater(plugin, parkour::endParkour, 20L * (plugin.getConfig().getInt("parkour_timer") + 1));
+        scheduler1.runTaskTimer(plugin, parkour::bossBarProgress, 20L, 20L);
+    }
+
+    public static void bossBarProgress() {
+        double bossBarProgress = bossBar.getProgress();
+        if (bossBarProgress + timerInterval < 1) {
+            bossBar.setProgress(bossBarProgress + timerInterval);
+        }
     }
 
     public static void endParkour() {
+        scheduler1.cancelTasks(plugin);
         scheduler.cancelTasks(plugin);
+        bossBar.removeAll();
         if (Started) {
+            bossBar.setVisible(false);
             Started = false;
             for (UUID value : playerList) {
                 Player player = Bukkit.getPlayer(value);

@@ -22,11 +22,10 @@ public class scoreboard {
     public static @NotNull LinkedHashMap<UUID, Integer> sortHashMapByValues(@NotNull HashMap<UUID, Integer> passedMap) {
         List<UUID> mapKeys = new ArrayList<>(passedMap.keySet());
         List<Integer> mapValues = new ArrayList<>(passedMap.values());
-        mapValues.sort(Collections.reverseOrder());
-        mapKeys.sort(Collections.reverseOrder());
+        Collections.sort(mapValues);
+        Collections.sort(mapKeys);
 
-        LinkedHashMap<UUID, Integer> sortedMap =
-                new LinkedHashMap<>();
+        LinkedHashMap<UUID, Integer> sortedMap = new LinkedHashMap<>();
 
         for (Integer val : mapValues) {
             Iterator<UUID> keyIt = mapKeys.iterator();

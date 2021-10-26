@@ -46,23 +46,33 @@ public class placeholder extends PlaceholderExpansion {
             }
 
             if(params.equalsIgnoreCase("points1")) {
-                return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(0))).getName();
+                if (leadBoard.size() > 0) {
+                    return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(leadBoard.size() - 1))).getName();
+                } else return null;
             }
 
             if(params.equalsIgnoreCase("points2")) {
-                return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(1))).getName();
+                if (leadBoard.size() > 1) {
+                    return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(leadBoard.size() - 2))).getName();
+                } else return null;
             }
 
             if(params.equalsIgnoreCase("points3")) {
-                return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(2))).getName();
+                if (leadBoard.size() > 2) {
+                    return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(leadBoard.size() - 3))).getName();
+                } else return null;
             }
 
             if(params.equalsIgnoreCase("points4")) {
-                return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(3))).getName();
+                if (leadBoard.size() > 3) {
+                    return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(leadBoard.size() - 4))).getName();
+                } else return null;
             }
 
             if(params.equalsIgnoreCase("points5")) {
-                return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(4))).getName();
+                if (leadBoard.size() > 4) {
+                    return Objects.requireNonNull(Bukkit.getPlayer(leadBoard.get(leadBoard.size() - 5))).getName();
+                } else return null;
             }
 
             return null; // Placeholder is unknown by the Expansion

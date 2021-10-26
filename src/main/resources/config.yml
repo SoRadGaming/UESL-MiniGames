@@ -23,8 +23,8 @@ paintball_points_per_kills: 1
 #                   Spleef                   #
 ##############################################
 #Spleef Arena Map
-spleef_arena: Death_Spleef
-spleef_start_command: spleef join Death_Spleef
+spleef_arena: DeathSpleef
+spleef_start_command: spleef join DeathSpleef
 spleef_end_command: spleef leave
 spleef_max_player_count: 6
 #Spleef Message (support for & colours):
@@ -113,45 +113,57 @@ hungergames_points_per_kills: 1
 ##############################################
 #                   Global                   #
 ##############################################
+#Finishing Ceremony
+#First Place Timer
+first_timer: 19
+#Second Place Timer
+second_timer: 12
+#Third Place Timer
+third_timer: 5
+#Messages
+first_place_message: "Finally with &e%uesl-minigames_points% &rpoints is &1%uesl-minigames_points1%"
+second_place_message: "2nd place with &e%uesl-minigames_points% &rpoints is &1%uesl-minigames_points2%"
+third_place_message: "3rd place with &e%uesl-minigames_points% &rpoints is &1%uesl-minigames_points3%"
+welcome_message: "Welcome to the Finishing Ceremony!"
 #Lobby Location
 Lobby:
   ==: org.bukkit.Location
   world: World
-  x: -19.024953654972823
-  y: 7.0
-  z: 0.41853033280153595
-  pitch: 6.2918787
-  yaw: 91.84687
+  x: 0.0
+  y: 8.0
+  z: 0.0
+  pitch: 0.0
+  yaw: 90.0
 #Winner Location
 first_place:
   ==: org.bukkit.Location
   world: World
-  x: -0.8879658146635097
-  y: 7.0
-  z: -11.395532714905126
-  pitch: 7.8449035
-  yaw: -174.51395
+  x: -433.5
+  y: 17.0
+  z: 157.5
+  pitch: 0.0
+  yaw: -90.0
 second_place:
   ==: org.bukkit.Location
   world: World
-  x: 1.1254882886722222
-  y: 7.0
-  z: -13.845002368671585
-  pitch: 7.8449035
-  yaw: -174.51395
+  x: -433.5
+  y: 14.0
+  z: 166.5
+  pitch: 0.0
+  yaw: -90.0
 third_place:
   ==: org.bukkit.Location
   world: World
-  x: 2.73636840402138
-  y: 7.0
-  z: -15.369928092052966
-  pitch: 7.8449035
-  yaw: -174.51395
+  x: -433.5
+  y: 11.0
+  z: 148.5
+  pitch: 0.0
+  yaw: -90.0
 spectators:
   ==: org.bukkit.Location
   world: World
-  x: 0.6421321887032221
-  y: 7.0
-  z: -17.196836045349983
-  pitch: 7.8449035
-  yaw: -174.51395
+  x: -407.0
+  y: 12.0
+  z: 157.0
+  pitch: 0.0
+  yaw: 90.0

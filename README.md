@@ -11,15 +11,14 @@ Commands:
 - /umg
 - /umg help
 - /umg reload
-- /umg add <player>
-- /umg remove <player>
+- /umg add player group
+- /umg remove player group
 - /umg addall
-- /umg list
+- /umg list group
 - /umg Initialise
-- /umg start
-- /umg test <minigame>
-- /umg end <minigame>
-- /umg set <location>
+- /umg start minigame group
+- /umg end minigame group
+- /umg set location
 
 Placeholders:
 - %UESL-MiniGames_points%  // Return Player Point Count

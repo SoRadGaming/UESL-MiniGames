@@ -18,7 +18,7 @@ Commands:
 - /umg Initialise
 - /umg start minigame group
 - /umg end minigame group
-- /umg set location
+- /umg data player add/remove/set points
 
 Placeholders:
 - %UESL-MiniGames_points%  // Return Player Point Count

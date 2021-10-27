@@ -64,7 +64,7 @@ public class UESLCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.GREEN + "/umg start" + ChatColor.BLUE + " Start the Plugin " + ChatColor.RED + "REQUIRED");
             sender.sendMessage(ChatColor.GREEN + "/umg start minigames group" + ChatColor.BLUE + " start a MiniGame with certain group of players");
             sender.sendMessage(ChatColor.GREEN + "/umg end minigames" + ChatColor.BLUE + " End test MiniGame");
-            sender.sendMessage(ChatColor.GREEN + "/umg set location" + ChatColor.BLUE + " Set Location Values " + ChatColor.RED + "REQUIRED");
+            sender.sendMessage(ChatColor.GREEN + "/umg data player remove/add/set points" + ChatColor.BLUE + " Modify Point Values ");
             sender.sendMessage(ChatColor.GREEN + "Plugin made by: " + ChatColor.BLUE + "SoRadGaming");
             sender.sendMessage(ChatColor.BLUE + "---------------------------------------------------");
 
@@ -174,7 +174,38 @@ public class UESLCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
                 return true;
             }
-        }  else if (args.length == 2 && args[0].equalsIgnoreCase("set")) {
+        }  else if (args.length == 4 && args[0].equalsIgnoreCase("data")) {
+            if (sender.isOp()) {
+                Player player = Bukkit.getServer().getPlayer(args[1]);
+
+                if (player == null) {
+                    sender.sendMessage(ChatColor.RED + "Player can not be null!");
+                    return true;
+                }
+                if (args[2].equals("remove")) {
+                    int oldPoints = plugin.data.getInt(player.getUniqueId() + ".points");
+                    int points = oldPoints - Integer.parseInt(args[3]);
+                    plugin.data.set(player.getUniqueId() + ".points",points);
+                    sender.sendMessage(ChatColor.BLUE + player.getName() + ChatColor.GREEN + " has " + points + " points");
+                    return true;
+                }if (args[2].equals("add")) {
+                    int oldPoints = plugin.data.getInt(player.getUniqueId() + ".points");
+                    int points = oldPoints + Integer.parseInt(args[3]);
+                    plugin.data.set(player.getUniqueId() + ".points",points);
+                    sender.sendMessage(ChatColor.BLUE + player.getName() + ChatColor.GREEN + " has " + points + " points");
+                    return true;
+                } else if (args[2].equals("set")) {
+                    int points = Integer.parseInt(args[3]);
+                    plugin.data.set(player.getUniqueId() + ".points",points);
+                    sender.sendMessage(ChatColor.BLUE + player.getName() + ChatColor.GREEN + " has " + points + " points");
+                    return true;
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
+                return true;
+            }
+            /*
+        }   else if (args.length == 2 && args[0].equalsIgnoreCase("set")) {
             if (sender.isOp()) {
                 if (Objects.equals(args[1], "lobby")) {
                     plugin.getConfig().set("Lobby",loc);
@@ -196,6 +227,8 @@ public class UESLCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to do that");
                 return true;
             }
+
+             */
         }   else if (args.length == 3 && args[0].equalsIgnoreCase("start")) {
             if (sender.isOp()) {
                 if (Objects.equals(args[1], "bedwars")) {

@@ -24,20 +24,17 @@ public class CommandTabCompleter implements TabCompleter {
         if(cmd.getName().equalsIgnoreCase("umg")){
             ArrayList<String> completions = new ArrayList<>();
             if (args.length == 1) {
-                completions = new ArrayList<>(Arrays.asList("add", "help", "reload", "remove", "list", "set", "Initialise", "start", "end","addall", "finish"));
+                completions = new ArrayList<>(Arrays.asList("add", "help", "reload", "remove", "list", "data", "Initialise", "start", "end","addall", "finish"));
                 completions = getApplicableTabCompletes(args[0], completions);
             } else if (args.length == 2) {
                 switch (args[0]) {
                     case "add":
+                    case "set":
                     case "remove":
                         completions = new ArrayList<>();
                         for (Player player : Bukkit.getOnlinePlayers()) {
                             completions.add(player.getName());
                         }
-                        completions = getApplicableTabCompletes(args[1], completions);
-                        break;
-                    case "set":
-                        completions = new ArrayList<>(Arrays.asList("lobby", "first", "second", "third", "spectator"));
                         completions = getApplicableTabCompletes(args[1], completions);
                         break;
                     case "start":
@@ -62,6 +59,9 @@ public class CommandTabCompleter implements TabCompleter {
                     Set<String> oldKeys = gameManager.playerList.keySet();
                     List<String > keys = new ArrayList<>(oldKeys);
                     completions = new ArrayList<>(keys);
+                } else if (args[1].equals("set")) {
+                    completions = new ArrayList<>(Arrays.asList("add", "remove", "set"));
+                    completions = getApplicableTabCompletes(args[2], completions);
                 }
                 completions = getApplicableTabCompletes(args[2], completions);
             }

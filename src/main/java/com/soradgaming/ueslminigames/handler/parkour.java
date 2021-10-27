@@ -60,8 +60,8 @@ public class parkour implements Listener {
     public static void endParkour() {
         scheduler1.cancelTasks(plugin);
         scheduler.cancelTasks(plugin);
-        bossBar.removeAll();
         if (Started) {
+            bossBar.removeAll();
             bossBar.setVisible(false);
             Started = false;
             for (UUID value : playerList) {
